@@ -4,6 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ###### El script de la base de datos se encuentra en este proyecto [Base de Datos](https://github.com/maaseicha/FrontEndAngular_Capacitacion/blob/main/tiendapichincha.sql).
 ## Back End en Spring Boot
 ###### El back-end para que funcione Angular se encuentra aqui [Back-End](https://github.com/maaseicha/BackEndSpringBoot_Capacitacion.git). para su correcto uso tienes que tomar encuenta lo siguiente:
+- El proyecto Spring Boot esta construido con java 11
 - En el archivo de [Propiedades](https://github.com/maaseicha/BackEndSpringBoot_Capacitacion/blob/main/src/main/resources/application.properties). debe colocar el nombre de la base de datos, username, password
 - Descargar las dependencia de Maven
 - Ejecutar la aplicacion con Maven
