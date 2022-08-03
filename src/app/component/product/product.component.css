@@ -1,0 +1,29 @@
+.sizeImage {
+    height: 40px;
+}
+.img-size{
+    height: 250px;
+}
+.backRed {
+    background-color: rgb(255, 65, 65);
+}
+
+.fs-aseicha {
+    font-size: 1.5em;
+    color: black;
+}
+
+.fs-aseicha:hover {
+    font-size: 1.7em;
+    color: blue;
+}
+
+.dark-modal .modal-content {
+    background-color: #292b2c;
+    color: white;
+}
+
+.dark-modal .close {
+    color: white;
+}
+

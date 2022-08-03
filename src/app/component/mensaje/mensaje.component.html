@@ -1,0 +1,53 @@
+<table class="tbl-header">
+    <tbody>
+        <tr>
+            <td class="text-left wd33"><img src="assets/images/logo.png" alt="Logo Danjeans"></td>
+            <td class="text-center wd33">
+                <h4><strong>Mi tienda en linea</strong></h4>
+                <p>
+                    Pelileo <br>
+                    Teléfono: 0994786790 <br>
+                    Email: solomaaq@gmail.com
+                </p>
+            </td>
+            <td class="text-right wd33">
+                <p>
+                    Cédula: <strong>{{datos.cedula}}</strong><br>
+                    Nombre: {{datos.name}} {{datos.last_name}}<br>
+                    Correo electrónico: {{datos.email}}<br>
+                </p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<table class="tbl-detalle">
+    <thead>
+        <tr>
+            <th class="wd15">N° Orden</th>
+            <th class="text-left wd15">Fecha</th>
+            <th class="text-center wd15">Estado</th>
+            <th class="text-right wd15">Valor</th>
+        </tr>
+    </thead>
+    <tbody id="detalleOrden">
+        <tr *ngFor="let order of datos.orders">
+            <td>
+                {{order.invoice}}
+            </td>
+            <td class="text-left">
+                {{order.date | date:'EEEE, MMMM d, y h:mm:ss a'}}
+            </td>
+            <td class="text-center">
+                {{order.status}}
+            </td>
+            <td class="text-right">
+                {{order.total | currency:'$'}}
+            </td>
+        </tr>
+    </tbody>
+</table><br>
+<div class="text-center mb-4">
+    <p>Si tienes preguntas sobre tu pedido, <br>pongase en contacto con nombre, teléfono y Email</p>
+    <h3>¡Gracias por tu compra!</h3>
+</div>

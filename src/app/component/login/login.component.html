@@ -1,0 +1,20 @@
+<form>
+    <div class="row justify-content-center aling-items-center">
+        <div class="col-auto">
+            <img src="assets/images/logo.png" id="icon" alt="Logo" />
+        </div>
+    </div>
+    <br>
+    <div class="group">
+        <input type="text" id="username" name="username" [(ngModel)]="user.username" placeholder="Nombre de usuario"/><span class="highlight"></span><span class="bar"></span>
+        <i class="fas fa-user"></i>
+    </div>
+    <div class="group">
+        <input [type]="show ? 'text' : 'password'" name="password" id="password" [(ngModel)]="user.pass" (keyup.enter)="entrar()" placeholder="Contraseña"/><span class="highlight"></span><span class="bar"></span>
+        <button [ngClass]="show ? 'maseicha far fa-eye-slash':'maseicha far fa-eye'" (click)="password()" title="Mostrar contraseña"></button>
+    </div>
+    <button type="button" class="button buttonBlue" (click)="entrar()">Entrar</button>
+</form>
+<div class="underlay-photo"></div>
+<div class="underlay-black"></div>
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>

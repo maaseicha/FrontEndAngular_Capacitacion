@@ -1,0 +1,110 @@
+<!-- Filtrar datos -->
+<div class="row viewMovil">
+    <div class="col-lg-3">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar..."
+                aria-describedby="basic-addon1" [(ngModel)]="filtro"/>
+        </div>
+    </div>
+    <div class="col">
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" (click)="loadData()">
+                        Filtrar Catalogo
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <div class="row">
+                            <div class="col">
+                                <label>Genero:</label>
+                                <select class="form-select" [(ngModel)]="gender" (change)="filterParams()">
+                                    <option value="" selected>Seleccione un Genero</option>
+                                    <option value="M">Masculino</option>
+                                    <option value="F">Femenino</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label>Talla:</label>
+                                <select class="form-select" [(ngModel)]="size" (change)="filterParams()">
+                                    <option value="" selected>Seleccione una Talla</option>
+                                    <option *ngFor="let talla of tallas" [ngValue]="talla.size">{{talla.size}}</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label>Color:</label>
+                                <select class="form-select" [(ngModel)]="color" (change)="filterParams()">
+                                    <option value="" selected>Seleccione un color</option>
+                                    <option *ngFor="let col of colors" [ngValue]="col.name">{{col.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<!-- Mostrar productos -->
+<div class="row" *ngIf="products.status else Error">
+    <div class="col-md-3 col-product" *ngFor="let product of datos | filtrarData:filtro">
+        <div class="card movCar">
+            <figure>
+                <img [src]="product.image" class="card-img-top img-size" [alt]="product.name">
+                <div class="capa">
+                    <a type="button" class="btn btn-primary" (click)="getProduct(product.code)"
+                        data-bs-toggle="modal" data-bs-target="#productModal">
+                        Ver Producto
+                    </a>
+                </div>
+            </figure>
+            <div class="card-body">
+                <p><b>{{product.name}}</b></p>
+                <div class="d-flex justify-content-between">
+                    <p>{{product.price | currency:'$'}}</p>
+                    <p>{{product.model}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #Error>
+    <h5>{{products.message}}</h5>
+</ng-template>
+
+<!-- Modal -->
+<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productModalLabel">{{producto.name}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        <img class="img-modal" [src]="producto.image" [alt]="producto.name">
+                    </div>
+                    <div class="col">
+                        <span><b>Modelo: </b>{{producto.model}}</span><br>
+                        <span><b>Color: </b>{{producto.color}}</span><br>
+                        <span><b>Género: </b>{{producto.gender == 'M' ? 'Masculino': 'Femenino'}}</span><br>
+                        <span><b>Talla: </b>{{producto.size}}</span><br>
+                        <span><b>Precio: </b>{{producto.price | currency:'$'}}</span><br><br>
+                        <input type="number" min="1" placeholder="Ingrese cantidad carrito" [(ngModel)]="cantidadCarrito" oninput="this.value = 
+                        !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"/><br><br>
+                        <button class="btn btn-info btn-block" (click)="carrito(producto.code)"><i class="fa fa-cart-plus" aria-hidden="true"></i>
+                            Añadir carrito
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>

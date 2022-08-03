@@ -1,0 +1,29 @@
+#logo-company{
+    max-height: 50px;
+}
+.cart-no{
+    position: absolute;
+    min-height: 25px;
+    min-width: 25px;
+    border-radius: 50%;
+    font-size: 1em;
+    background: blue;
+    color: white;
+    text-align: center;
+    top:-12px;
+    right: -10px;
+}
+.position-relative{
+    position: relative;
+    right: 32px;
+}
+.item-nav:hover {
+    text-decoration: none;
+    color: #717fe0;
+}
+.item-nav {
+    text-decoration: none;
+    font-size: 14pt;
+    color: rgb(39, 29, 29);
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}

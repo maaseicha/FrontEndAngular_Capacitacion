@@ -1,0 +1,49 @@
+.m-r-16 {
+    margin-right: 20px;
+}
+.fs-18 {
+    font-size: 18px;
+}
+*{
+    background-color: #222;
+}
+.cl0 {
+    color: #fff;
+    margin-left: 40px;
+}
+.stext-301 {
+    font-family: Montserrat-Bold;
+    font-size: 19px;
+    line-height: 1.6;
+    text-transform: uppercase;
+}
+
+.cl7 {
+    color: #b2b2b2;
+}
+.hov-cl1:hover {
+    color: #717fe0;
+}
+.p-b-10{
+    padding-bottom: 10px;
+}
+ul, li {
+    margin: 0px;
+    list-style-type: none;
+}
+a:hover {
+    text-decoration: none;
+}
+a {
+    text-decoration: none;
+}
+
+.stext-107 {
+    font-family: Poppins-Regular;
+    font-size: 17px;
+    line-height: 1.923;
+}
+
+.cl6 {
+    color: #888;
+}

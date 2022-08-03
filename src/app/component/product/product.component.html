@@ -1,0 +1,225 @@
+<div class="d-flex justify-content-between pt-3 pb-3">
+    <h2>Listado de productos</h2>
+    <button class="btn btn-primary" (click)="open(content,'save','')"><i class="fas fa-plus-square"></i> Nuevo
+        producto</button>
+</div>
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Image</th>
+            <th>Nombre</th>
+            <th>Modelo</th>
+            <th>Genero</th>
+            <th>Color</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Opciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of datos" [ngStyle]="{'background-color':item.stock <=10 ?'rgb(255, 65, 65)':''}">
+            <td>{{ item.code }}</td>
+            <td><img [src]="item.image" class="sizeImage" [alt]="item.name" /></td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.model }}</td>
+            <td>{{item.gender == 'M' ? 'Masculino': 'Femenino'}}</td>
+            <td>{{ item.color }}</td>
+            <td>{{ item.price | currency:'$' }}</td>
+            <td>{{ item.stock }}</td>
+            <td class="d-flex justify-content-center">
+                <div class="btn-group dropstart">
+                    <a class="nav-link pt-2" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="fas fa-ellipsis-h fs-aseicha"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li>
+                            <button class="dropdown-item" type="button">
+                                <i class="far fa-eye"></i> Ver datos
+                            </button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item" type="button" (click)="open(content,'edit',item.code)">
+                                <i class="far fa-edit"></i> Editar producto
+                            </button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item" type="button" (click)="delete(item.code)">
+                                <i class="fas fa-trash-alt"></i> Eliminar producto
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div class="mb-2">&nbsp;</div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">{{edit ? 'Actualizar Producto' : 'Crear Producto'}}</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="row d-flex justify-content-around">
+            <div class="col-md-6 ">
+                <div class="card">
+                    <div class="card-body">
+                        <form [formGroup]="contactoP">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-floating form-group mb-3">
+                                        <input type="text" [disabled]="edit" id="code" formControlName="code"
+                                            [(ngModel)]="producto.code" placeholder="Code" class="form-control"
+                                            [ngClass]="{'is-invalid': f['code'].invalid && (f['code'].dirty || f['code'].touched || submitted)}" />
+                                        <div *ngIf="f['code'].invalid && (f['code'].dirty || f['code'].touched || submitted)"
+                                            class="invalid-feedback">
+                                            <div *ngIf="f['code'].errors?.['required']">Por favor, Ingrese un código
+                                                para el zapato</div>
+                                        </div>
+                                        <label for="code">Código:</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" id="name" formControlName="name" [(ngModel)]="producto.name"
+                                            placeholder="Name" class="form-control"
+                                            [ngClass]="{'is-invalid': f['name'].invalid && (f['name'].dirty || f['name'].touched || submitted)}"/>
+                                        <div *ngIf="f['name'].invalid && (f['name'].dirty || f['name'].touched || submitted)"
+                                            class="invalid-feedback">
+                                            <div *ngIf="f['name'].errors?.['required']">Por favor, Ingrese un nombre</div>
+                                            <div *ngIf="f['name'].errors?.['pattern']">Por favor, solo se permite letras</div>
+                                        </div>
+                                        <label for="name">Nombre del producto:</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" id="model" formControlName="model" [(ngModel)]="producto.model"
+                                            placeholder="Model" class="form-control"
+                                            [ngClass]="{'is-invalid': f['model'].invalid && (f['model'].dirty || f['model'].touched || submitted)}"/>
+                                        <label for="model">Modelo del producto:</label>
+                                        <div *ngIf="f['model'].invalid && (f['model'].dirty || f['model'].touched || submitted)"
+                                            class="invalid-feedback">
+                                            <div *ngIf="f['model'].errors?.['required']">Por favor, Ingrese un modelo</div>
+                                            <div *ngIf="f['model'].errors?.['pattern']">Por favor, solo se permite letras</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" id="price" formControlName="price" [(ngModel)]="producto.price"
+                                            placeholder="Price" class="form-control"
+                                            [ngClass]="{'is-invalid': f['price'].invalid && (f['price'].dirty || f['price'].touched || submitted)}"/>
+                                        <label for="price">Precio del producto:</label>
+                                        <div *ngIf="f['price'].invalid && (f['price'].dirty || f['price'].touched || submitted)"
+                                            class="invalid-feedback">
+                                            <div *ngIf="f['price'].errors?.['required']">Por favor, Ingrese el precio del producto</div>
+                                            <div *ngIf="f['price'].errors?.['pattern']">Por favor, solo se permite números y números decimales</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" id="color" formControlName="color" [(ngModel)]="producto.color"
+                                            placeholder="Color" class="form-control"
+                                            [ngClass]="{'is-invalid': f['color'].invalid && (f['color'].dirty || f['color'].touched || submitted)}"/>
+                                        <label for="color">Color del producto:</label>
+                                        <div *ngIf="f['color'].invalid && (f['color'].dirty || f['color'].touched || submitted)"
+                                            class="invalid-feedback">
+                                            <div *ngIf="f['color'].errors?.['required']">Por favor, Ingrese el color del producto</div>
+                                            <div *ngIf="f['color'].errors?.['pattern']">Por favor, solo se permite letras minusculas</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" id="size" formControlName="size" [(ngModel)]="producto.size"
+                                            placeholder="size" class="form-control"
+                                            [ngClass]="{'is-invalid': f['size'].invalid && (f['size'].dirty || f['size'].touched || submitted)}"/>
+                                        <label for="size">Talla del producto:</label>
+                                        <div *ngIf="f['size'].invalid && (f['size'].dirty || f['size'].touched || submitted)"
+                                            class="invalid-feedback">
+                                            <div *ngIf="f['size'].errors?.['required']">Por favor, Ingrese la talla del producto</div>
+                                            <div *ngIf="f['size'].errors?.['pattern']">Por favor, solo se permite números</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-floating mb-3">
+                                        <select id="gender" formControlName="gender" class="form-select"
+                                            [(ngModel)]="producto.gender" [ngClass]="{'is-invalid': f['gender'].invalid && (f['gender'].dirty || f['gender'].touched || submitted)}">
+                                            <option value="M">Masculino</option>
+                                            <option value="F">Femenino</option>
+                                        </select>
+                                        <label for="gender">Genero del producto:</label>
+                                        <div *ngIf="f['gender'].invalid && (f['gender'].dirty || f['gender'].touched || submitted)"
+                                            class="invalid-feedback">
+                                            <div *ngIf="f['gender'].errors?.['required']">Por favor, seleccione un genero</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" id="stock" formControlName="stock" [(ngModel)]="producto.stock"
+                                            placeholder="stock" class="form-control"
+                                            [ngClass]="{'is-invalid': f['stock'].invalid && (f['stock'].dirty || f['stock'].touched || submitted)}"/>
+                                        <label for="stock">Stock del producto:</label>
+                                        <div *ngIf="f['stock'].invalid && (f['stock'].dirty || f['stock'].touched || submitted)"
+                                            class="invalid-feedback">
+                                            <div *ngIf="f['stock'].errors?.['required']">Por favor, Ingrese el stock del producto</div>
+                                            <div *ngIf="f['stock'].errors?.['pattern']">Por favor, solo se permite números</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" id="image" formControlName="image" [(ngModel)]="producto.image"
+                                            placeholder="image" class="form-control"
+                                            [ngClass]="{'is-invalid': f['image'].invalid && (f['image'].dirty || f['image'].touched || submitted)}"/>
+                                        <label for="image">Imagen del producto:</label>
+                                        <div *ngIf="f['image'].invalid && (f['image'].dirty || f['image'].touched || submitted)"
+                                            class="invalid-feedback">
+                                            <div *ngIf="f['image'].errors?.['required']">Por favor, Ingrese una url de una imagen</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button [ngClass]="edit ? 'btn btn-primary btn-block' : 'btn btn-success btn-block'"
+                                (click)="edit ? updateProduct() : saveNewProduct()">
+                                {{edit ? 'Actualizar' : 'Guardar'}}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <figure>
+                        <img [src]="producto.image == '' ? '/assets/noimage.png' : producto.image"
+                            class="card-img-top img-size" [alt]="producto.name">
+                    </figure>
+                    <div class="card-body">
+                        <p><b>{{producto.name == '' ? 'Nombre del producto' : producto.name}}</b></p>
+                        <div class="d-flex justify-content-between">
+                            <p>{{producto.price == 0 ? 'Precio del producto' : producto.price | currency:'$'}}</p>
+                            <p>{{producto.model == '' ? 'Modelo del producto' : producto.model}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>

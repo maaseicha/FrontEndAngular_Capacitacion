@@ -1,0 +1,105 @@
+<div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
+            aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active" data-bs-interval="4000">
+            <img src="assets/images/slide-01.jpg" class="d-block w-100" alt="slide-01">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>First slide label</h5>
+                <p>Some representative placeholder content for the first slide.</p>
+            </div>
+        </div>
+        <div class="carousel-item" data-bs-interval="3000">
+            <img src="assets/images/slide-04.jpg" class="d-block w-100" alt="slide-04">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Second slide label</h5>
+                <p>Some representative placeholder content for the second slide.</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="assets/images/slide-05.jpg" class="d-block w-100" alt="slide-05">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Third slide label</h5>
+                <p>Some representative placeholder content for the third slide.</p>
+            </div>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+<br>
+<!-- Mostrar productos -->
+<div class="row" *ngIf="products.status else Error">
+    <div class="col-md-3 col-product" *ngFor="let product of datos">
+        <div class="card movCar">
+            <figure>
+                <img [src]="product.image" class="card-img-top img-size" [alt]="product.name">
+                <div class="capa">
+                    <a type="button" class="btn btn-primary" (click)="getProduct(product.code)"
+                        data-bs-toggle="modal" data-bs-target="#productModal">
+                        Ver Producto
+                    </a>
+                </div>
+            </figure>
+            <div class="card-body">
+                <p><b>{{product.name}}</b></p>
+                <div class="d-flex justify-content-between">
+                    <p>{{product.price | currency:'$'}}</p>
+                    <p>{{product.model}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #Error>
+    <h5>{{products.message}}</h5>
+</ng-template>
+
+<!-- Modal -->
+<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productModalLabel">{{producto.name}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        <img class="img-modal" [src]="producto.image" [alt]="producto.name">
+                    </div>
+                    <div class="col">
+                        <span><b>Modelo: </b>{{producto.model}}</span><br>
+                        <span><b>Color: </b>{{producto.color}}</span><br>
+                        <span><b>Género: </b>{{producto.gender == 'M' ? 'Masculino': 'Femenino'}}</span><br>
+                        <span><b>Talla: </b>{{producto.size}}</span><br>
+                        <span><b>Precio: </b>{{producto.price | currency:'$'}}</span><br><br>
+                        <input type="number" min="1" placeholder="Ingrese cantidad carrito"
+                            [(ngModel)]="cantidadCarrito" oninput="this.value = 
+                        !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" /><br><br>
+                        <button class="btn btn-info btn-block" (click)="carrito(producto.code)"><i
+                                class="fa fa-cart-plus" aria-hidden="true"></i>
+                            Añadir carrito
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>
+
+<div class="d-grid gap-2 pb-3">
+    <a type="button" class="btn btn-outline-secondary" routerLink="/catalogo">Mostrar productos</a>
+</div>

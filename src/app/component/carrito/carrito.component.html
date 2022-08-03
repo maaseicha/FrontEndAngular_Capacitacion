@@ -1,0 +1,56 @@
+<div class="row pt-4 pb-4">
+    <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50" *ngIf="response.status else Error">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Producto</th>
+                    <th scope="col"></th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Total</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="text-wrap" *ngFor="let data of datos">
+                    <td scope="row"><img [src]="data.image" class="img-size" [alt]="data.name" /></td>
+                    <td class="pt-4 fst-italic">{{data.name}}</td>
+                    <td class="pt-4">{{data.price | currency:'$'}}</td>
+                    <td class="pt-4 text-center">{{data.stock}}</td>
+                    <td class="pt-4">{{data.price * data.stock | currency:'$'}}</td>
+                    <td class="pt-3"><button class="btn btn-danger"><i class="fas fa-trash"></i></button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <ng-template #Error>
+        <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50"><h5>{{response.message}}</h5></div>
+    </ng-template>
+    <div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title ms-4 mb-4">TOTALES</h3>
+                <div class="row ms-3">
+                    <div class="col">
+                        <span class="size-208 stext-110 pe-5">Subtotal: </span><b class="size-209">{{subtotal | currency:'$'}}</b>
+                    </div>
+                </div>
+                <div class="row ms-3">
+                    <div class="col"><span class="size-208 stext-110 pe-5">IVA:
+                        </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b class="size-209">{{subtotal * 0.12 | currency:'$'}}</b>
+                    </div>
+                </div>
+                <hr>
+                <div class="row ms-3 mt-4 mb-4">
+                    <div class="col"><span class="size-208 stext-110 pe-5">TOTAL:
+                        </span>&nbsp;<b class="size-209">{{subtotal + (subtotal * 0.12) | currency:'$'}}</b>
+                    </div>
+                </div>
+                <div class="d-grid gap-2 pb-3">
+                    <button type="button" [disabled]="!idUser" class="btn btn-outline-primary" (click)="comprar()" >Procesar Pago</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>
